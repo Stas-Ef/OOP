@@ -1,18 +1,21 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
 
 public class App {
     public static void main(String[] args) {
 
-        Product Apple = new Product("Яблоки", 1);
+        SimpleProduct Apple = new SimpleProduct("Яблоки", 1);
 
-        Product Banana = new Product("Бананы", 10);
-        Product Onion = new Product("Лук", 100);
-        Product Pineapple = new Product("Ананас", 100000);
-        Product Watermelon = new Product("Арбуз", 1000);
-        Product Potato = new Product("Картофель", 10000);
+        SimpleProduct Banana = new SimpleProduct("Бананы", 10);
+        FixPriceProduct Onion = new FixPriceProduct("Лук");
+        DiscountedProduct Pineapple = new DiscountedProduct("Ананас", 100000, 15);
+        SimpleProduct Watermelon = new SimpleProduct("Арбуз", 1000);
+        SimpleProduct Potato = new SimpleProduct("Картофель", 10000);
         ProductBasket people1 = new ProductBasket();
         System.out.println("======================================");
         people1.AddProductBasket(Banana);
