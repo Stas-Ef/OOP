@@ -1,34 +1,50 @@
 package org.skypro.skyshop.product;
 
-public class Product {
+import org.skypro.skyshop.SearchEngine.Searchable;
+
+public abstract class Product implements Searchable {
     private String productName;
-    private int productCoast;
 
 
-    public Product(String productName, int productCoast) {
+    public Product(String productName) {
         this.productName = productName;
-        this.productCoast = productCoast;
+
     }
+
+
+    public abstract double getProductCoast();
 
     public String getproductName() {
         return productName;
     }
 
-    public int getProductCoast() {
-        return productCoast;
+    public abstract String toString();
+
+
+    public boolean isSpecial() {
+        return false;
     }
 
     public String setproductName() {
         return productName;
     }
 
-    public int setProductCoast() {
-        return productCoast;
-    }
     @Override
     public boolean equals(Object obj) {
 
         Product product = (Product) obj;
-        return productName.equals(product.productName) && productCoast == (product.productCoast) ;
+        return productName.equals(product.productName);
+    }
+
+    @Override
+    public String searchTerm() {
+        return productName;
+    }
+
+    public String getContentType() {
+        return "PRODUCT";
     }
 }
+
+
+

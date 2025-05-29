@@ -26,8 +26,8 @@ public class ProductBasket {
         }
     }
 
-    public int coastOfBasket() {
-        int summ = 0;
+    public double coastOfBasket() {
+        double summ = 0;
         for (int i = 0; i < basket.length; i++) {
             if (basket[i] != null) {
                 summ = basket[i].getProductCoast() + summ;
@@ -37,11 +37,15 @@ public class ProductBasket {
     }
 
     public void printBasket() {
+        int amount = 0;
         boolean isEmpty = true;
         for (int i = 0; i < basket.length; i++) {
             if (basket[i] != null) {
                 isEmpty = false;
-                System.out.println(basket[i].getproductName() + ": " + basket[i].getProductCoast());
+                System.out.println(basket[i].toString());
+            }
+            if (basket[i] != null && basket[i].isSpecial()) {
+                amount++;
             }
         }
         if (isEmpty) {
@@ -49,7 +53,10 @@ public class ProductBasket {
 
         } else {
             System.out.println("Итого: " + coastOfBasket());
+            System.out.println("Специальных товаров: " + amount);
+
         }
+
     }
 
 
@@ -68,8 +75,8 @@ public class ProductBasket {
     }
 
     public void clearBasket() {
-        for (int i = 0; i < basket.length; i++) {
-            basket[i] = null;
+        for (Product basket: basket) {
+            basket = null;
         }
     }
 }
