@@ -1,7 +1,7 @@
 package org.skypro.skyshop.product;
 
 public class SimpleProduct extends Product {
-    int productCoast;
+   private int productCoast;
 
     public SimpleProduct(String productName, int productCoast) {
         super(productName);
@@ -18,8 +18,5 @@ public class SimpleProduct extends Product {
         return getproductName() + ": " + getProductCoast();
     }
 
-    @Override
-    public boolean isSpecial() {
-        return false;
-    }
+
 }

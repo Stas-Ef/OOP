@@ -75,8 +75,8 @@ public class ProductBasket {
     }
 
     public void clearBasket() {
-        for (int i = 0; i < basket.length; i++) {
-            basket[i] = null;
+        for (Product basket: basket) {
+            basket = null;
         }
     }
 }

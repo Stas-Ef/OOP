@@ -1,10 +1,15 @@
 package org.skypro.skyshop;
 
+import org.skypro.skyshop.SearchEngine.SearchEngine;
+import org.skypro.skyshop.SearchEngine.Searchable;
+import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+
+import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
@@ -40,5 +45,33 @@ public class App {
         people1.printBasket();
         System.out.println("people1.findProductBasket(Banana) = " + people1.findProductBasket(Banana));
         System.out.println("people1.coastOfBasket() = " + people1.coastOfBasket());
+        System.out.println("======================================");
+
+        Article miniBananas = new Article("Маленькие Бананы", "Почти как бананы, только в несколько раз меньше. Не Яблоки.");
+        Article tomato = new Article("Помидоры", "Красные, но Не Яблоки.");
+        Article strawberry = new Article("Ягоды", "совсем не Яблоки.");
+        Article antonovka = new Article("Яблоки \"Антоновка\"", "Одна из многих разновидностей яблок");
+        Article gala = new Article("Яблоки \"Гала\"", "Еще одна из многих разновидностей яблок");
+
+        SearchEngine SearchOne = new SearchEngine(15);
+
+        SearchOne.add(miniBananas);
+        SearchOne.add(Banana);
+        SearchOne.add(Apple);
+        SearchOne.add(Onion);
+        SearchOne.add(Pineapple);
+        SearchOne.add(Watermelon);
+        SearchOne.add(Potato);
+        SearchOne.add(antonovka);
+        SearchOne.add(gala);
+        SearchOne.add(tomato);
+        SearchOne.add(strawberry);
+
+        System.out.println("печать массива SearchOne " + SearchOne.toString());
+
+
+
+        System.out.println("Печать найенного " + Arrays.toString(SearchOne.search("Ябло")));
+        //SearchOne.search("Банан");
     }
 }
