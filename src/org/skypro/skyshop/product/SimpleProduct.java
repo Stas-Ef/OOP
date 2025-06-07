@@ -1,11 +1,23 @@
 package org.skypro.skyshop.product;
 
 public class SimpleProduct extends Product {
-   private int productCoast;
+    private int productCoast;
 
     public SimpleProduct(String productName, int productCoast) {
         super(productName);
-        this.productCoast = productCoast;
+        try {
+            if (productCoast < 1) {
+                throw new IllegalArgumentException();
+            } else {
+                this.productCoast = productCoast;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Введена неверная цена продукта " + productName);
+            ;
+        } finally {
+            System.out.println("Проверка успешна");
+        }
     }
 
     @Override

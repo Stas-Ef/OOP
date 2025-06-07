@@ -14,14 +14,14 @@ import java.util.Arrays;
 public class App {
     public static void main(String[] args) {
 
-        SimpleProduct Apple = new SimpleProduct("Яблоки", 1);
-
+        SimpleProduct Apple = new SimpleProduct("Яблоки", 0);
         SimpleProduct Banana = new SimpleProduct("Бананы", 10);
-        FixPriceProduct Onion = new FixPriceProduct("Лук");
-        DiscountedProduct Pineapple = new DiscountedProduct("Ананас", 100000, 15);
+        FixPriceProduct Onion = new FixPriceProduct("   ");
+        DiscountedProduct Pineapple = new DiscountedProduct(null, 100000, -2);
         SimpleProduct Watermelon = new SimpleProduct("Арбуз", 1000);
         SimpleProduct Potato = new SimpleProduct("Картофель", 10000);
         ProductBasket people1 = new ProductBasket();
+
         System.out.println("======================================");
         people1.AddProductBasket(Banana);
         people1.AddProductBasket(Apple);
@@ -30,9 +30,6 @@ public class App {
         people1.AddProductBasket(Watermelon);
         people1.AddProductBasket(Potato);
         System.out.println("=====sss=============================");
-        System.out.println("people1.findProductBasket(Banana) = " + people1.findProductBasket(Banana));
-        System.out.println("people1.findProductBasket(Potato) = " + people1.findProductBasket(Potato));
-        System.out.println("======================================");
 
         people1.printBasket();
         System.out.println("======================================");
@@ -66,12 +63,16 @@ public class App {
         SearchOne.add(gala);
         SearchOne.add(tomato);
         SearchOne.add(strawberry);
-
         System.out.println("печать массива SearchOne " + SearchOne.toString());
-
-
-
         System.out.println("Печать найенного " + Arrays.toString(SearchOne.search("Ябло")));
+
+
+
+
+
+        System.out.println("======================================");
+        System.out.println("Печать лучшего найденного " + Arrays.toString(SearchOne.bestResultsSearch("Космос")));
+        System.out.println("Печать лучшего найденного " + Arrays.toString(SearchOne.bestResultsSearch("Ябло")));
         //SearchOne.search("Банан");
     }
 }

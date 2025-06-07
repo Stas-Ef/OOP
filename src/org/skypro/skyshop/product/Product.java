@@ -1,5 +1,6 @@
 package org.skypro.skyshop.product;
 
+import org.skypro.skyshop.Exception.BestResultNotFound;
 import org.skypro.skyshop.SearchEngine.Searchable;
 
 public abstract class Product implements Searchable {
@@ -7,8 +8,24 @@ public abstract class Product implements Searchable {
 
 
     public Product(String productName) {
-        this.productName = productName;
-
+        try {
+            if (productName == null) {
+                throw new IllegalArgumentException();
+            } else {
+                this.productName = productName;
+            }
+            if (productName.isBlank()) {
+                throw new BestResultNotFound();
+            } else {
+                this.productName = productName;
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Имя не введено");
+        } catch (Exception e) {
+            System.out.println("Имя состоит из одних пробелов");
+        } finally {
+            System.out.println("Проверка успешна");
+        }
     }
 
 

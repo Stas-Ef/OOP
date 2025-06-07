@@ -64,7 +64,7 @@ public class ProductBasket {
         boolean isFind = false;
         for (int i = 0; i < basket.length; i++) {
             if (basket[i] != null) {
-                if (basket[i].getproductName().equals(productName.getproductName())) {
+                if (basket[i].getproductName() != null && basket[i].getproductName().equals(productName.getproductName())) {
                     isFind = true;
                     break;
                 }
@@ -75,7 +75,7 @@ public class ProductBasket {
     }
 
     public void clearBasket() {
-        for (Product basket: basket) {
+        for (Product basket : basket) {
             basket = null;
         }
     }
