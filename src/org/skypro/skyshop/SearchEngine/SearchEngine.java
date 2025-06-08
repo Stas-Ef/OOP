@@ -49,13 +49,9 @@ public class SearchEngine {
         for (int i = 0; i < searchables.length; i++) {
             if (searchables[i] != null && searchables[i].searchTerm() != null && searchables[i].searchTerm().contains(term)) {
                 tempCount = resultsOfCoincidence(term, searchables[i]);
-                if (tempCount == countOfFinded) {
-                    for (int j = 0; j < bestResults.length; j++) {
-                        if (bestResults[indexOfFinded] != null) {
-                            indexOfFinded++;
-                            break;
-                        }
-                    }
+                if (tempCount == countOfFinded && bestResults[indexOfFinded] != null) {
+                    indexOfFinded++;
+
                     bestResults[indexOfFinded] = searchables[i];
                 }
                 if (tempCount > countOfFinded) {
