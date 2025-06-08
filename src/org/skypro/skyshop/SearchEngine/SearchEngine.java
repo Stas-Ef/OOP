@@ -40,40 +40,38 @@ public class SearchEngine {
         return Arrays.toString(searchables);
     }
 
-    public Searchable[] bestResultsSearch(String term) {
+    public Searchable[] bestResultsSearch(String term) throws BestResultNotFound {
         Searchable[] bestResults = new Searchable[5];
         int indexOfFinded = 0;
         int tempCount = 0;
         int countOfFinded = 0;
-        try {
-            for (int i = 0; i < searchables.length; i++) {
-                if (searchables[i] != null && searchables[i].searchTerm() != null && searchables[i].searchTerm().contains(term)) {
-                    tempCount = resultsOfCoincidence(term, searchables[i]);
-                    if (tempCount == countOfFinded) {
-                        for (int j = 0; j < bestResults.length; j++) {
-                            if (bestResults[indexOfFinded] != null) {
-                                indexOfFinded++;
-                                break;
-                            }
+
+        for (int i = 0; i < searchables.length; i++) {
+            if (searchables[i] != null && searchables[i].searchTerm() != null && searchables[i].searchTerm().contains(term)) {
+                tempCount = resultsOfCoincidence(term, searchables[i]);
+                if (tempCount == countOfFinded) {
+                    for (int j = 0; j < bestResults.length; j++) {
+                        if (bestResults[indexOfFinded] != null) {
+                            indexOfFinded++;
+                            break;
                         }
-                        bestResults[indexOfFinded] = searchables[i];
                     }
-                    if (tempCount > countOfFinded) {
-                        countOfFinded = tempCount;
-                        indexOfFinded = 0;
-                        for (int j = 0; j < bestResults.length - indexOfFinded; j++) {
-                            bestResults[j + indexOfFinded] = null;
-                        }
-                        bestResults[indexOfFinded] = searchables[i];
+                    bestResults[indexOfFinded] = searchables[i];
+                }
+                if (tempCount > countOfFinded) {
+                    countOfFinded = tempCount;
+                    indexOfFinded = 0;
+                    for (int j = 0; j < bestResults.length - indexOfFinded; j++) {
+                        bestResults[j + indexOfFinded] = null;
                     }
+                    bestResults[indexOfFinded] = searchables[i];
                 }
             }
-            if (indexOfFinded == 0) {
-                throw new BestResultNotFound();
-            }
-        } catch (BestResultNotFound e) {
-            System.out.println("Похожие элементы для запроса " + term + " не найдены");
         }
+        if (indexOfFinded == 0) {
+            throw new BestResultNotFound("Похожие элементы для запроса  не найдены");
+        }
+
         return bestResults;
     }
 

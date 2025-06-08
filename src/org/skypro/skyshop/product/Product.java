@@ -1,31 +1,26 @@
 package org.skypro.skyshop.product;
 
 import org.skypro.skyshop.Exception.BestResultNotFound;
+import org.skypro.skyshop.Exception.NameIsBlankException;
 import org.skypro.skyshop.SearchEngine.Searchable;
 
 public abstract class Product implements Searchable {
     private String productName;
 
 
-    public Product(String productName) {
-        try {
-            if (productName == null) {
-                throw new IllegalArgumentException();
-            } else {
-                this.productName = productName;
-            }
-            if (productName.isBlank()) {
-                throw new BestResultNotFound();
-            } else {
-                this.productName = productName;
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Имя не введено");
-        } catch (Exception e) {
-            System.out.println("Имя состоит из одних пробелов");
-        } finally {
-            System.out.println("Проверка успешна");
+    public Product(String productName) throws NameIsBlankException {
+
+        if (productName == null) {
+            throw new IllegalArgumentException("Имя продукта не введено");
+        } else {
+            this.productName = productName;
         }
+        if (productName.isBlank()) {
+            throw new NameIsBlankException("Имя состоит из одних пробелов");
+        } else {
+            this.productName = productName;
+        }
+
     }
 
 

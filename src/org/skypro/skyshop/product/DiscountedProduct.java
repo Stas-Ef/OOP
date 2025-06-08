@@ -1,33 +1,28 @@
 package org.skypro.skyshop.product;
 
 import org.skypro.skyshop.Exception.DiscountPriceException;
+import org.skypro.skyshop.Exception.NameIsBlankException;
+
+import javax.naming.NameAlreadyBoundException;
 
 public class DiscountedProduct extends Product {
     private int basicCoast;
     private int discount;
 
-    public DiscountedProduct(String productName, int basicCoast, int discount) {
+    public DiscountedProduct(String productName, int basicCoast, int discount) throws DiscountPriceException, IllegalArgumentException, NameIsBlankException {
         super(productName);
-        try {
-            if (basicCoast < 1) {
-                throw new IllegalArgumentException();
-            } else {
-                this.basicCoast = basicCoast;
-            }
-            if (discount < 0 || discount > 100) {
-                throw new DiscountPriceException();
-            } else {
-                this.discount = discount;
-            }
 
-        } catch (IllegalArgumentException e) {
-            System.out.println("Введена неверная цена продукта " + basicCoast);
-        } catch (DiscountPriceException e) {
-            System.out.println("Введена неверная скидка продукта " + discount);
-
-        } finally {
-            System.out.println("Проверка успешна");
+        if (basicCoast < 1) {
+            throw new IllegalArgumentException("Введена неверная цена продукта " + productName + " Введенная цена: " + basicCoast);
+        } else {
+            this.basicCoast = basicCoast;
         }
+        if (discount < 0 || discount > 100) {
+            throw new DiscountPriceException("Введена неверная скидка продукта " + productName + " Введенная скидка " + discount);
+        } else {
+            this.discount = discount;
+        }
+
     }
 
     @Override

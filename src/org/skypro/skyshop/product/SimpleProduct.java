@@ -1,22 +1,16 @@
 package org.skypro.skyshop.product;
 
+import org.skypro.skyshop.Exception.NameIsBlankException;
+
 public class SimpleProduct extends Product {
     private int productCoast;
 
-    public SimpleProduct(String productName, int productCoast) {
+    public SimpleProduct(String productName, int productCoast) throws IllegalArgumentException, NameIsBlankException {
         super(productName);
-        try {
-            if (productCoast < 1) {
-                throw new IllegalArgumentException();
-            } else {
-                this.productCoast = productCoast;
-            }
-
-        } catch (Exception e) {
-            System.out.println("Введена неверная цена продукта " + productName);
-            ;
-        } finally {
-            System.out.println("Проверка успешна");
+        if (productCoast < 1) {
+            throw new IllegalArgumentException("Введена неверная цена продукта " + productName + " Введенная цена: " + productCoast);
+        } else {
+            this.productCoast = productCoast;
         }
     }
 
