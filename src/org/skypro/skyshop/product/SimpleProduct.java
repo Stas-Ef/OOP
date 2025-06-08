@@ -9,9 +9,9 @@ public class SimpleProduct extends Product {
         super(productName);
         if (productCoast < 1) {
             throw new IllegalArgumentException("Введена неверная цена продукта " + productName + " Введенная цена: " + productCoast);
-        } else {
-            this.productCoast = productCoast;
         }
+        this.productCoast = productCoast;
+
     }
 
     @Override

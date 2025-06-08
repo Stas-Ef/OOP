@@ -17,12 +17,10 @@ public class SearchEngine {
         int resultCount = 0;
 
         for (int i = 0; i < searchables.length; i++) {
-            if (searchables[i] != null && searchables[i].searchTerm() != null && searchables[i].searchTerm().contains(term)) {
-                if (resultCount < 5) {
-                    results[resultCount++] = searchables[i];
-                } else {
-                    break;
-                }
+            if (searchables[i] != null && searchables[i].searchTerm() != null && searchables[i].searchTerm().contains(term) && resultCount < 5) {
+                results[resultCount++] = searchables[i];
+            } else {
+                break;
             }
         }
         return results;
@@ -51,7 +49,6 @@ public class SearchEngine {
                 tempCount = resultsOfCoincidence(term, searchables[i]);
                 if (tempCount == countOfFinded && bestResults[indexOfFinded] != null) {
                     indexOfFinded++;
-
                     bestResults[indexOfFinded] = searchables[i];
                 }
                 if (tempCount > countOfFinded) {
@@ -67,7 +64,6 @@ public class SearchEngine {
         if (indexOfFinded == 0) {
             throw new BestResultNotFound("Похожие элементы для запроса  не найдены");
         }
-
         return bestResults;
     }
 
@@ -84,7 +80,6 @@ public class SearchEngine {
         } else {
             resultCount = 0;
         }
-
         return resultCount;
     }
 }

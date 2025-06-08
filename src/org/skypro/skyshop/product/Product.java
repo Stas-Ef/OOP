@@ -12,14 +12,14 @@ public abstract class Product implements Searchable {
 
         if (productName == null) {
             throw new IllegalArgumentException("Имя продукта не введено");
-        } else {
-            this.productName = productName;
         }
+        this.productName = productName;
+
         if (productName.isBlank()) {
             throw new NameIsBlankException("Имя состоит из одних пробелов");
-        } else {
-            this.productName = productName;
         }
+        this.productName = productName;
+
 
     }
 
