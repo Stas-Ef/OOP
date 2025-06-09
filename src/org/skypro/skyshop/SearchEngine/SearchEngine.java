@@ -2,27 +2,23 @@ package org.skypro.skyshop.SearchEngine;
 
 import org.skypro.skyshop.Exception.BestResultNotFound;
 
-import java.util.Arrays;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class SearchEngine {
     private List<Searchable> searchables;
-    private int count = 0;
 
-    public SearchEngine(int size) {
+
+    public SearchEngine() {
         this.searchables = new LinkedList<>();
     }
 
     public List<Searchable> search(String term) {
         List<Searchable> results = new LinkedList<>();
-        int resultCount = 0;
-
         for (Searchable search : searchables) {
-            if (searchables != null && search.searchTerm() != null && search.searchTerm().contains(term) && resultCount < 5) {
+            if (search != null && search.searchTerm() != null && search.searchTerm().contains(term)) {
                 results.add(search);
-            } else {
-                break;
             }
         }
         return results;
@@ -33,7 +29,7 @@ public class SearchEngine {
             throw new IllegalArgumentException("Продукт не может быть пустым");
         }
         searchables.add(term);
-        count++;
+
     }
 
     @Override
@@ -43,28 +39,23 @@ public class SearchEngine {
 
     public List<Searchable> bestResultsSearch(String term) throws BestResultNotFound {
         List<Searchable> bestResults = new LinkedList<>();
-        int indexOfFinded = 0;
         int tempCount = 0;
         int countOfFinded = 0;
 
         for (Searchable bestResult : searchables) {
-            if (searchables != null && bestResult.searchTerm() != null && bestResult.searchTerm().contains(term)) {
+            if (bestResult != null && bestResult.searchTerm() != null && bestResult.searchTerm().contains(term)) {
                 tempCount = resultsOfCoincidence(term, bestResult);
                 if (tempCount == countOfFinded && bestResult != null) {
-                    indexOfFinded++;
                     bestResults.add(bestResult);
                 }
                 if (tempCount > countOfFinded) {
                     countOfFinded = tempCount;
-                    indexOfFinded = 0;
-                    for (int j = 0; j < bestResults.size() - indexOfFinded; j++) {
-                        bestResult = null;
-                    }
+                    bestResults.clear();
                     bestResults.add(bestResult);
                 }
             }
         }
-        if (indexOfFinded == 0) {
+        if (bestResults.isEmpty()) {
             throw new BestResultNotFound("Похожие элементы для запроса  не найдены");
         }
         return bestResults;

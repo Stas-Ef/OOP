@@ -8,7 +8,7 @@ import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 
-import java.util.Arrays;
+
 import java.util.List;
 
 public class App {
@@ -63,7 +63,7 @@ public class App {
             Article antonovka = new Article("Яблоки \"Антоновка\"", "Одна из многих разновидностей яблок");
             Article gala = new Article("Яблоки \"Гала\"", "Еще одна из многих разновидностей яблок");
 
-            SearchEngine SearchOne = new SearchEngine(15);
+            SearchEngine SearchOne = new SearchEngine();
 
             SearchOne.add(miniBananas);
             SearchOne.add(Banana);
@@ -76,7 +76,7 @@ public class App {
             SearchOne.add(gala);
             SearchOne.add(tomato);
             SearchOne.add(strawberry);
-            System.out.println("печать SearchOne " + SearchOne.toString());
+            System.out.println("печать SearchOne " + SearchOne);
             System.out.println("Печать найенного " + SearchOne.search("Ябло").toString());
 
 
