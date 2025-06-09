@@ -3,22 +3,24 @@ package org.skypro.skyshop.SearchEngine;
 import org.skypro.skyshop.Exception.BestResultNotFound;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SearchEngine {
-    private Searchable[] searchables;
+    private List<Searchable> searchables;
     private int count = 0;
 
     public SearchEngine(int size) {
-        this.searchables = new Searchable[size];
+        this.searchables = new LinkedList<>();
     }
 
-    public Searchable[] search(String term) {
-        Searchable[] results = new Searchable[5];
+    public List<Searchable> search(String term) {
+        List<Searchable> results = new LinkedList<>();
         int resultCount = 0;
 
-        for (int i = 0; i < searchables.length; i++) {
-            if (searchables[i] != null && searchables[i].searchTerm() != null && searchables[i].searchTerm().contains(term) && resultCount < 5) {
-                results[resultCount++] = searchables[i];
+        for (Searchable search : searchables) {
+            if (searchables != null && search.searchTerm() != null && search.searchTerm().contains(term) && resultCount < 5) {
+                results.add(search);
             } else {
                 break;
             }
@@ -27,37 +29,38 @@ public class SearchEngine {
     }
 
     public void add(Searchable term) {
-        if (count < searchables.length) {
-            searchables[count] = term;
-            count++;
+        if (term == null) {
+            throw new IllegalArgumentException("Продукт не может быть пустым");
         }
+        searchables.add(term);
+        count++;
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(searchables);
+        return searchables.toString();
     }
 
-    public Searchable[] bestResultsSearch(String term) throws BestResultNotFound {
-        Searchable[] bestResults = new Searchable[5];
+    public List<Searchable> bestResultsSearch(String term) throws BestResultNotFound {
+        List<Searchable> bestResults = new LinkedList<>();
         int indexOfFinded = 0;
         int tempCount = 0;
         int countOfFinded = 0;
 
-        for (int i = 0; i < searchables.length; i++) {
-            if (searchables[i] != null && searchables[i].searchTerm() != null && searchables[i].searchTerm().contains(term)) {
-                tempCount = resultsOfCoincidence(term, searchables[i]);
-                if (tempCount == countOfFinded && bestResults[indexOfFinded] != null) {
+        for (Searchable bestResult : searchables) {
+            if (searchables != null && bestResult.searchTerm() != null && bestResult.searchTerm().contains(term)) {
+                tempCount = resultsOfCoincidence(term, bestResult);
+                if (tempCount == countOfFinded && bestResult != null) {
                     indexOfFinded++;
-                    bestResults[indexOfFinded] = searchables[i];
+                    bestResults.add(bestResult);
                 }
                 if (tempCount > countOfFinded) {
                     countOfFinded = tempCount;
                     indexOfFinded = 0;
-                    for (int j = 0; j < bestResults.length - indexOfFinded; j++) {
-                        bestResults[j + indexOfFinded] = null;
+                    for (int j = 0; j < bestResults.size() - indexOfFinded; j++) {
+                        bestResult = null;
                     }
-                    bestResults[indexOfFinded] = searchables[i];
+                    bestResults.add(bestResult);
                 }
             }
         }
