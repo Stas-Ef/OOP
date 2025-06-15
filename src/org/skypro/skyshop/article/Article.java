@@ -12,6 +12,10 @@ final public class Article implements Searchable {
         this.text = text;
     }
 
+    public String getproductName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return name + " " + '\'' +

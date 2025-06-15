@@ -76,13 +76,14 @@ public class App {
             SearchOne.add(gala);
             SearchOne.add(tomato);
             SearchOne.add(strawberry);
-            System.out.println("печать SearchOne " + SearchOne);
-            System.out.println("Печать найенного " + SearchOne.search("Ябло").toString());
+
+            System.out.println("печать всего SearchOne: " + SearchOne);
+            System.out.println("Печать найенного: " + SearchOne.search("Ябло").toString());
 
 
-            System.out.println("5======================================");
-            System.out.println("Печать лучшего найденного " + SearchOne.bestResultsSearch("Ябло").toString());
-            System.out.println("Печать лучшего найденного " + SearchOne.bestResultsSearch("Космос").toString());
+            System.out.println("6======================================");
+            System.out.println("Печать лучшего найденного Ябло:" + SearchOne.bestResultsSearch("Ябло").toString());
+            System.out.println("Печать лучшего найденного Космос:" + SearchOne.bestResultsSearch("Космос").toString());
 
         } catch (Exception e) {
             System.out.println(e);

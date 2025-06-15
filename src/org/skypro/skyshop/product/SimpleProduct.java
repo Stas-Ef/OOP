@@ -15,13 +15,13 @@ public class SimpleProduct extends Product {
     }
 
     @Override
-    public double getProductCoast() {
+    public double getProductCost() {
         return productCoast;
     }
 
     @Override
     public String toString() {
-        return getproductName() + ": " + getProductCoast();
+        return getproductName() + ": " + getProductCost();
     }
 
 

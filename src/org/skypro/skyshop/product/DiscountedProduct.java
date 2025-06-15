@@ -24,13 +24,13 @@ public class DiscountedProduct extends Product {
     }
 
     @Override
-    public double getProductCoast() {
+    public double getProductCost() {
         return basicCoast * (1 - discount / 100.0);
     }
 
     @Override
     public String toString() {
-        return getproductName() + " со скидкой: " + getProductCoast() + " (" + discount + "%)";
+        return getproductName() + " со скидкой: " + getProductCost() + " (" + discount + "%)";
     }
 
     @Override

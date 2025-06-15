@@ -1,34 +1,29 @@
 package org.skypro.skyshop.SearchEngine;
 
 import org.skypro.skyshop.Exception.BestResultNotFound;
+import org.skypro.skyshop.product.Product;
 
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class SearchEngine {
-    private List<Searchable> searchables;
+    private Map<String, List<Searchable>> searchables;
 
 
     public SearchEngine() {
-        this.searchables = new LinkedList<>();
-    }
-
-    public List<Searchable> search(String term) {
-        List<Searchable> results = new LinkedList<>();
-        for (Searchable search : searchables) {
-            if (search != null && search.searchTerm() != null && search.searchTerm().contains(term)) {
-                results.add(search);
-            }
-        }
-        return results;
+        this.searchables = new TreeMap<>();
     }
 
     public void add(Searchable term) {
         if (term == null) {
-            throw new IllegalArgumentException("Продукт не может быть пустым");
+            throw new IllegalArgumentException("Продукт для поиска не может быть пустым");
         }
-        searchables.add(term);
+        List<Searchable> findList = searchables.getOrDefault(term.searchTerm(), new ArrayList<>());
+        findList.add(term);
+        searchables.put(term.getproductName(), findList);
 
     }
 
@@ -37,21 +32,32 @@ public class SearchEngine {
         return searchables.toString();
     }
 
-    public List<Searchable> bestResultsSearch(String term) throws BestResultNotFound {
-        List<Searchable> bestResults = new LinkedList<>();
-        int tempCount = 0;
-        int countOfFinded = 0;
-
-        for (Searchable bestResult : searchables) {
-            if (bestResult != null && bestResult.searchTerm() != null && bestResult.searchTerm().contains(term)) {
-                tempCount = resultsOfCoincidence(term, bestResult);
-                if (tempCount == countOfFinded && bestResult != null) {
-                    bestResults.add(bestResult);
+    public Map<String, Searchable> search(String term) {
+        Map<String, Searchable> results = new TreeMap<>();
+        for (List<Searchable> findTerm : searchables.values()) {
+            for (Searchable search : findTerm) {
+                if (search != null && search.searchTerm() != null && search.searchTerm().contains(term)) {
+                    results.put(search.getproductName(), search);
                 }
-                if (tempCount > countOfFinded) {
-                    countOfFinded = tempCount;
-                    bestResults.clear();
-                    bestResults.add(bestResult);
+            }
+        }
+        return results;
+    }
+
+    public Map<String, Searchable> bestResultsSearch(String term) throws BestResultNotFound {
+        Map<String, Searchable> bestResults = new TreeMap<>();
+        int countOfFinded = 0;
+        for (List<Searchable> findTerm : searchables.values()) {
+            for (Searchable bestResult : findTerm) {
+                if (bestResult != null && bestResult.searchTerm() != null && bestResult.searchTerm().contains(term)) {
+                    int tempCount = resultsOfCoincidence(term, bestResult);
+                    if (tempCount > countOfFinded) {
+                        countOfFinded = tempCount;
+                        bestResults.clear();
+                        bestResults.put(bestResult.getproductName(), bestResult);
+                    } else if (tempCount == countOfFinded) {
+                        bestResults.putIfAbsent(bestResult.getproductName(), bestResult);
+                    }
                 }
             }
         }
@@ -71,8 +77,6 @@ public class SearchEngine {
                 index = indexString + term.length();
                 indexString = product.searchTerm().toLowerCase().indexOf(term.toLowerCase(), index);
             }
-        } else {
-            resultCount = 0;
         }
         return resultCount;
     }

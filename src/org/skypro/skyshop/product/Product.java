@@ -1,6 +1,5 @@
 package org.skypro.skyshop.product;
 
-import org.skypro.skyshop.Exception.BestResultNotFound;
 import org.skypro.skyshop.Exception.NameIsBlankException;
 import org.skypro.skyshop.SearchEngine.Searchable;
 
@@ -24,7 +23,7 @@ public abstract class Product implements Searchable {
     }
 
 
-    public abstract double getProductCoast();
+    public abstract double getProductCost();
 
     public String getproductName() {
         return productName;

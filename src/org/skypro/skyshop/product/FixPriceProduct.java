@@ -11,13 +11,13 @@ public class FixPriceProduct extends Product {
 
 
     @Override
-    public double getProductCoast() {
+    public double getProductCost() {
         return FIXED_PRICE;
     }
 
     @Override
     public String toString() {
-        return getproductName() + " с фиксированной ценой: Фиксированная цена " + getProductCoast();
+        return getproductName() + " с фиксированной ценой: Фиксированная цена " + getProductCost();
     }
 
     @Override
