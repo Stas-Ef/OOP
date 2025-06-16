@@ -2,7 +2,7 @@ package org.skypro.skyshop.Exception;
 
 import java.io.IOException;
 
-public class NameIsBlankException extends IOException {
+public class NameIsBlankException extends Exception {
 
     public NameIsBlankException() {
         super();

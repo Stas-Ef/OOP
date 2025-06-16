@@ -4,10 +4,7 @@ import org.skypro.skyshop.Exception.BestResultNotFound;
 import org.skypro.skyshop.product.Product;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class SearchEngine {
     private Map<String, List<Searchable>> searchables;
@@ -79,5 +76,17 @@ public class SearchEngine {
             }
         }
         return resultCount;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        SearchEngine that = (SearchEngine) object;
+        return Objects.equals(searchables, that.searchables);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(searchables);
     }
 }

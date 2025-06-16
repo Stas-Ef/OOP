@@ -3,6 +3,8 @@ package org.skypro.skyshop.product;
 import org.skypro.skyshop.Exception.NameIsBlankException;
 import org.skypro.skyshop.SearchEngine.Searchable;
 
+import java.util.Objects;
+
 public abstract class Product implements Searchable {
     private String productName;
 
@@ -45,6 +47,11 @@ public abstract class Product implements Searchable {
 
         Product product = (Product) obj;
         return productName.equals(product.productName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(productName);
     }
 
     @Override

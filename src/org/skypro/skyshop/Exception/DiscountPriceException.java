@@ -2,7 +2,7 @@ package org.skypro.skyshop.Exception;
 
 import java.io.IOException;
 
-public class DiscountPriceException extends IOException {
+public class DiscountPriceException extends Exception {
     public DiscountPriceException() {
         super();
     }
