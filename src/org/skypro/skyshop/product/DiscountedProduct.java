@@ -39,16 +39,5 @@ public class DiscountedProduct extends Product {
         return true;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-        if (!super.equals(object)) return false;
-        DiscountedProduct that = (DiscountedProduct) object;
-        return basicCoast == that.basicCoast && discount == that.discount;
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), basicCoast, discount);
-    }
 }

@@ -60,8 +60,8 @@ public class App {
             Article miniBananas = new Article("Маленькие Бананы", "Почти как бананы, только в несколько раз меньше. Не Яблоки.");
             Article tomato = new Article("Помидоры", "Красные, но Не Яблоки.");
             Article strawberry = new Article("Ягоды", "совсем не Яблоки.");
-            Article antonovka = new Article("Яблоки \"Антоновка\"", "Одна из многих разновидностей яблок");
             Article gala = new Article("Яблоки \"Гала\"", "Еще одна из многих разновидностей яблок");
+            Article antonovka = new Article("Яблоки \"Антоновка\"", "Одна из многих разновидностей яблок");
 
             SearchEngine SearchOne = new SearchEngine();
 

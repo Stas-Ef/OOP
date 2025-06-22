@@ -7,18 +7,18 @@ import org.skypro.skyshop.product.Product;
 import java.util.*;
 
 public class SearchEngine {
-    private Map<String, List<Searchable>> searchables;
+    private Map<String, Set<Searchable>> searchables;
 
 
     public SearchEngine() {
-        this.searchables = new TreeMap<>();
+        this.searchables = new HashMap<>();
     }
 
     public void add(Searchable term) {
         if (term == null) {
             throw new IllegalArgumentException("Продукт для поиска не может быть пустым");
         }
-        List<Searchable> findList = searchables.getOrDefault(term.searchTerm(), new ArrayList<>());
+        Set<Searchable> findList = searchables.getOrDefault(term.searchTerm(), new HashSet<>());
         findList.add(term);
         searchables.put(term.getproductName(), findList);
 
@@ -29,31 +29,31 @@ public class SearchEngine {
         return searchables.toString();
     }
 
-    public Map<String, Searchable> search(String term) {
-        Map<String, Searchable> results = new TreeMap<>();
-        for (List<Searchable> findTerm : searchables.values()) {
+    public Set<String> search(String term) {
+        Set<String> results = new TreeSet<>(stringComparator);
+        for (Set<Searchable> findTerm : searchables.values()) {
             for (Searchable search : findTerm) {
                 if (search != null && search.searchTerm() != null && search.searchTerm().contains(term)) {
-                    results.put(search.getproductName(), search);
+                    results.add(search.getproductName());
                 }
             }
         }
         return results;
     }
 
-    public Map<String, Searchable> bestResultsSearch(String term) throws BestResultNotFound {
-        Map<String, Searchable> bestResults = new TreeMap<>();
+    public Set<Searchable> bestResultsSearch(String term) throws BestResultNotFound {
+        Set<Searchable> bestResults = new TreeSet<>(new Searchable.SearchableComparable());
         int countOfFinded = 0;
-        for (List<Searchable> findTerm : searchables.values()) {
+        for (Set<Searchable> findTerm : searchables.values()) {
             for (Searchable bestResult : findTerm) {
                 if (bestResult != null && bestResult.searchTerm() != null && bestResult.searchTerm().contains(term)) {
                     int tempCount = resultsOfCoincidence(term, bestResult);
                     if (tempCount > countOfFinded) {
                         countOfFinded = tempCount;
                         bestResults.clear();
-                        bestResults.put(bestResult.getproductName(), bestResult);
+                        bestResults.add(bestResult);
                     } else if (tempCount == countOfFinded) {
-                        bestResults.putIfAbsent(bestResult.getproductName(), bestResult);
+                        bestResults.add(bestResult);
                     }
                 }
             }
@@ -89,4 +89,15 @@ public class SearchEngine {
     public int hashCode() {
         return Objects.hashCode(searchables);
     }
+
+    Comparator<String> stringComparator = new Comparator<>() {
+        @Override
+        public int compare(String s1, String s2) {
+            int lengthComparison = Integer.compare(s2.length(), s1.length()); // от большего к меньшему
+            if (lengthComparison != 0) {
+                return lengthComparison;
+            }
+            return s1.compareTo(s2); // при равной длине — по алфавиту
+        }
+    };
 }

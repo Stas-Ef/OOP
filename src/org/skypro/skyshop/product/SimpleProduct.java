@@ -26,16 +26,5 @@ public class SimpleProduct extends Product {
         return getproductName() + ": " + getProductCost();
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-        if (!super.equals(object)) return false;
-        SimpleProduct that = (SimpleProduct) object;
-        return productCoast == that.productCoast;
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), productCoast);
-    }
 }
