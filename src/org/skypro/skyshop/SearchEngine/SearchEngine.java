@@ -1,7 +1,6 @@
 package org.skypro.skyshop.SearchEngine;
 
 import org.skypro.skyshop.Exception.BestResultNotFound;
-import org.skypro.skyshop.product.Product;
 
 
 import java.util.*;
@@ -29,12 +28,12 @@ public class SearchEngine {
         return searchables.toString();
     }
 
-    public Set<String> search(String term) {
-        Set<String> results = new TreeSet<>(stringComparator);
+    public Set<Searchable> search(String term) {
+        Set<Searchable> results = new TreeSet<>(new SearchableComparable());
         for (Set<Searchable> findTerm : searchables.values()) {
             for (Searchable search : findTerm) {
                 if (search != null && search.searchTerm() != null && search.searchTerm().contains(term)) {
-                    results.add(search.getproductName());
+                    results.add(search);
                 }
             }
         }
@@ -42,7 +41,7 @@ public class SearchEngine {
     }
 
     public Set<Searchable> bestResultsSearch(String term) throws BestResultNotFound {
-        Set<Searchable> bestResults = new TreeSet<>(new Searchable.SearchableComparable());
+        Set<Searchable> bestResults = new TreeSet<>(new SearchableComparable());
         int countOfFinded = 0;
         for (Set<Searchable> findTerm : searchables.values()) {
             for (Searchable bestResult : findTerm) {
@@ -78,26 +77,5 @@ public class SearchEngine {
         return resultCount;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-        SearchEngine that = (SearchEngine) object;
-        return Objects.equals(searchables, that.searchables);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(searchables);
-    }
-
-    Comparator<String> stringComparator = new Comparator<>() {
-        @Override
-        public int compare(String s1, String s2) {
-            int lengthComparison = Integer.compare(s2.length(), s1.length()); // от большего к меньшему
-            if (lengthComparison != 0) {
-                return lengthComparison;
-            }
-            return s1.compareTo(s2); // при равной длине — по алфавиту
-        }
-    };
 }
