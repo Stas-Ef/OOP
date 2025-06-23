@@ -9,6 +9,7 @@ public class SearchEngine {
     private Map<String, Set<Searchable>> searchables;
 
 
+
     public SearchEngine() {
         this.searchables = new HashMap<>();
     }

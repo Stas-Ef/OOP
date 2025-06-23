@@ -19,6 +19,7 @@ public class SearchableComparable implements Comparator<Searchable> {
             return lengthComparison;
         }
         return s1.getproductName().compareTo(s2.getproductName());
+
     }
 
 }

@@ -9,6 +9,7 @@ public interface Searchable {
 
     String getproductName();
 
+
     default String getStringRepresentation() {
         return searchTerm() + " " + getContentType();
     }
