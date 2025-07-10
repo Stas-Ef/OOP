@@ -30,6 +30,7 @@ public class ProductBasket {
     }
 
 
+
     public double costOfBasket() {
         return basket.values().stream()
                 .flatMap(Collection::stream)
