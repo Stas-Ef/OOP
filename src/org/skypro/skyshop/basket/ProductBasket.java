@@ -29,36 +29,45 @@ public class ProductBasket {
         return size;
     }
 
+
     public double costOfBasket() {
-        double summ = 0;
-        for (List<Product> products : basket.values()) {
-            for (Product product : products) {
-                summ += product.getProductCost();
-            }
-        }
-        return summ;
+        return basket.values().stream()
+                .flatMap(Collection::stream)
+                .mapToDouble(Product::getProductCost)
+                .sum();
     }
 
+
     public void printBasket() {
-        int amount = 0;
         System.out.println("Печать корзины:");
         if (basket == null || basket.isEmpty()) {
             System.out.println("В корзине пусто");
             return;
         }
-        for (List<Product> products : basket.values()) {
-            for (Product product : products) {
-                if (product != null) {
-                    System.out.println(product);
-                    if (product.isSpecial()) {
-                        amount++;
+
+
+        basket.values().stream()
+                .flatMap(Collection::stream)
+                .forEach(product -> {
+                    if (product != null) {
+                        System.out.println(product);
                     }
-                }
-            }
-        }
+                });
+
+        long specialCount = getSpecialCount();
+
         System.out.println("___________________________");
         System.out.println("Итого: " + costOfBasket());
-        System.out.println("Специальных товаров: " + amount);
+        System.out.println("Специальных товаров: " + specialCount);
+    }
+
+
+    private long getSpecialCount() {
+        return basket.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .filter(Product::isSpecial)
+                .count();
     }
 
 
@@ -66,17 +75,13 @@ public class ProductBasket {
         if (productToFind == null || productToFind.getproductName() == null) {
             return false;
         }
-        List<Product> products = basket.get(productToFind.getproductName());
-        if (products != null) {
-            for (Product product : products) {
-                if (product != null) {
-                    if (product.getproductName() != null && product.getproductName().equals(productToFind.getproductName())) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+        return basket.values().stream()
+                .flatMap(Collection::stream)
+                .anyMatch(product ->
+                        product != null &&
+                                product.getproductName() != null &&
+                                product.getproductName().equals(productToFind.getproductName())
+                );
     }
 
     public void clearBasket() {
